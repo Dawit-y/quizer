@@ -8,7 +8,7 @@ class User(AbstractUser):
         ('T' , 'Teacher'),
         ('S', 'Student')
     ]
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     phone = models.CharField(max_length=12)  # 251 9 55 35  64 43
     user_type = models.CharField(max_length=1, choices=USER_TYPES)
     
@@ -17,3 +17,8 @@ class User(AbstractUser):
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
+    
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+
+       

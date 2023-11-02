@@ -71,13 +71,13 @@ class StudentSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     class Meta:
         model = Student
-        fields = ['id','user', 'school_id', 'department', 'section', 'image']
+        fields = ['id','user', 'school_id', 'image']
 
 class AddStudentSerializer(serializers.ModelSerializer):
     user = UserCreateSerializer()
     class Meta:
         model = Student
-        fields = ['id','user', 'school_id', 'department', 'section', 'image']
+        fields = ['id','user', 'school_id', 'image']
     
     def create(self, validated_data):
         user = dict(validated_data.pop('user'))
@@ -89,17 +89,21 @@ class TeacherSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     class Meta:
         model = Teacher
-        fields = ['id','user', 'school_id', 'department', 'image']
+        fields = ['id','user', 'school_id','image']
 
 class AddTeacherSerializer(serializers.ModelSerializer):
     user = UserCreateSerializer()
     class Meta:
         model = Teacher
-        fields = ['id','user', 'school_id', 'department', 'image']
+        fields = ['id','user', 'school_id', 'image']
     
     def create(self, validated_data):
         user = dict(validated_data.pop('user'))
         instance = get_user_model().objects.create(**user, user_type='T')      
         return Teacher.objects.create(user=instance, **validated_data)
-    
+
+class ClassRoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ClassRoom
+        fields = ['id', 'host', 'name', 'participants']
         

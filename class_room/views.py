@@ -7,14 +7,11 @@ from rest_framework.response import Response
 from .models import *
 from .serializers import *
 # Create your views here.
-
-
 class ExamViewSet(ModelViewSet):
     queryset = Exam.objects.prefetch_related('sections').all()
     serializer_class = ExamSerializer
     lookup_field = 'slug'
 
-    
 class SectionViewSet(ModelViewSet):
     lookup_field = 'type'
     def get_serializer_class(self):
@@ -79,4 +76,8 @@ class TeacherViewSet(ModelViewSet):
         if self.request.method == 'POST':
             return AddTeacherSerializer
         return TeacherSerializer
+
+class ClassRoomViewSet(ModelViewSet):
+    queryset = ClassRoom.objects.all()
+    serializer_class = ClassRoomSerializer
 
