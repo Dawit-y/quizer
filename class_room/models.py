@@ -80,7 +80,6 @@ class FillInQuestion(models.Model):
 
 class Student(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='students')
-    school_id = models.CharField(max_length=100)
     image = models.ImageField(upload_to='students/images/', validators=[validate_file_size])
 
     def __str__(self):
@@ -89,7 +88,6 @@ class Student(models.Model):
 
 class Teacher(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='teachers')
-    school_id = models.CharField(max_length=100)
     image = models.ImageField(upload_to='teachers/images/', validators=[validate_file_size])
     
     def __str__(self):

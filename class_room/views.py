@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.mixins import RetrieveModelMixin
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser, FormParser, FileUploadParser
 from .models import *
 from .serializers import *
 # Create your views here.
@@ -64,11 +65,13 @@ class ChoiceViewSet(ModelViewSet):
 
 class StudentViewSet(ModelViewSet):
     queryset = Student.objects.all()
+    parser_classes = [MultiPartParser, FormParser, FileUploadParser]
     
     def get_serializer_class(self):
         if self.request.method == 'POST':
             return AddStudentSerializer
         return StudentSerializer
+    
 class TeacherViewSet(ModelViewSet):
     queryset = Teacher.objects.all()
     
