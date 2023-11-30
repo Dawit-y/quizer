@@ -3,8 +3,6 @@ from .import views
 
 router = routers.DefaultRouter()
 router.register('exams', views.ExamViewSet)
-router.register('students', views.StudentViewSet)
-router.register('teachers', views.TeacherViewSet)
 router.register('rooms', views.ClassRoomViewSet)
 
 section_router = routers.NestedDefaultRouter(router, 'exams', lookup='exam' )

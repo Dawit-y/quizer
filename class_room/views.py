@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser, FileUploadParser
 from .models import *
 from .serializers import *
+
 # Create your views here.
 class ExamViewSet(ModelViewSet):
     queryset = Exam.objects.prefetch_related('sections').all()
@@ -62,24 +63,6 @@ class ChoiceViewSet(ModelViewSet):
     def get_serializer_context(self):
         question_id = self.kwargs['question_pk']
         return {'question_id': question_id}
-
-class StudentViewSet(ModelViewSet):
-    queryset = Student.objects.all()
-    parser_classes = [MultiPartParser, FormParser, FileUploadParser]
-    
-    def get_serializer_class(self):
-        if self.request.method == 'POST':
-            return AddStudentSerializer
-        return StudentSerializer
-    
-class TeacherViewSet(ModelViewSet):
-    queryset = Teacher.objects.all()
-    
-    def get_serializer_class(self):
-        if self.request.method == 'POST':
-            return AddTeacherSerializer
-        return TeacherSerializer
-
 class ClassRoomViewSet(ModelViewSet):
     queryset = ClassRoom.objects.all()
     serializer_class = ClassRoomSerializer

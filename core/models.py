@@ -4,13 +4,9 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class User(AbstractUser):
-    USER_TYPES = [
-        ('T' , 'Teacher'),
-        ('S', 'Student')
-    ]
+   
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=12)  # 251 9 55 35  64 43
-    user_type = models.CharField(max_length=1, choices=USER_TYPES)
     
     def __str__(self):
         return self.username

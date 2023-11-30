@@ -66,47 +66,7 @@ class ChoiceSerializer(serializers.ModelSerializer):
         question_id = self.context['question_id']
         question = ChoiceQuestion.objects.get(id = question_id)
         return Choice.objects.create(question=question, **validated_data)
-
-class StudentSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
-    class Meta:
-        model = Student
-        fields = ['id','user', 'image']
-
-
-class AddStudentSerializer(serializers.ModelSerializer):
-    user = UserCreateSerializer()
-    image = serializers.ImageField(required=False)
-    class Meta:
-        model = Student
-        fields = ['id','user', 'image']
     
-    def create(self, validated_data):
-        user = dict(validated_data.pop('user'))
-        instance = get_user_model().objects.create(**user, user_type='S')
-        instance.set_password(user["password"])
-        instance.is_active = True
-        instance.save()      
-        return Student.objects.create(user=instance, **validated_data)
-    
-
-class TeacherSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
-    class Meta:
-        model = Teacher
-        fields = ['id','user','image']
-
-class AddTeacherSerializer(serializers.ModelSerializer):
-    user = UserCreateSerializer()
-    class Meta:
-        model = Teacher
-        fields = ['id','user', 'image']
-    
-    def create(self, validated_data):
-        user = dict(validated_data.pop('user'))
-        instance = get_user_model().objects.create(**user, user_type='T')      
-        return Teacher.objects.create(user=instance, **validated_data)
-
 class ClassRoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClassRoom

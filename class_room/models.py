@@ -1,8 +1,11 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from .utils import unique_slug_generator
 from .validators import validate_file_size
 
+
+User = get_user_model()
 
 class Exam(models.Model):
     title = models.CharField(max_length=100, null=True, blank=True)
@@ -78,26 +81,10 @@ class FillInQuestion(models.Model):
         return self.content
 
 
-class Student(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='students')
-    image = models.ImageField(upload_to='students/images/', validators=[validate_file_size])
-
-    def __str__(self):
-        return self.user.username
-
-
-class Teacher(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='teachers')
-    image = models.ImageField(upload_to='teachers/images/', validators=[validate_file_size])
-    
-    def __str__(self):
-        return self.user.username
-
-
 class ClassRoom(models.Model):
-    host = models.ForeignKey(Teacher, on_delete=models.PROTECT, related_name='room')
+    host = models.ForeignKey(User, on_delete=models.PROTECT, related_name='room')
     name = models.CharField(max_length=50)
-    participants = models.ManyToManyField(Student, related_name='class_room')
+    participants = models.ManyToManyField(User, related_name='class_room')
     updated = models.DateTimeField(auto_now=True, auto_now_add=False)
     created = models.DateTimeField(auto_now_add=True)
     
