@@ -7,7 +7,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 class UserCreateSerializer(BaseUserCreateSerializer):
     password2 = serializers.CharField(write_only=True, style={'input_type': 'password', 'placeholder': 'Confirm Password'})
     class Meta(BaseUserCreateSerializer.Meta):
-        fields = ['id', 'username','password','password2', 'email', 'first_name', 'last_name', 'phone']
+        fields = ['id', 'username','password','password2', 'email', 'first_name', 'last_name']
     
     def validate(self, attrs):
         attrs = dict(attrs)
@@ -28,8 +28,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
 
-        # Add custom claims
         token['user_name'] = user.username
-        # ...
 
         return token

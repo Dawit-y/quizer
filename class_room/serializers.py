@@ -1,8 +1,4 @@
 from rest_framework import serializers
-from rest_framework.response import Response
-from django.utils.text import slugify
-from core.serializers import UserCreateSerializer, UserSerializer
-from django.contrib.auth import get_user_model
 from .models import *
 
 class ExamSerializer(serializers.ModelSerializer):
