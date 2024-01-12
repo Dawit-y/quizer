@@ -147,12 +147,20 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'core.User'
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+
+
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://localhost:5173"
 ]
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+SESSION_COOKIE_DOMAIN = "127.0.0.1"
+CSRF_COOKIE_DOMAIN = "127.0.0.1"
+SESSION_COOKIE_SAMESITE = None
+CSRF_COOKIE_SAMESITE = None
+
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True
 # SESSION_COOKIE_SAMESITE = 'None'
@@ -165,6 +173,7 @@ REST_FRAMEWORK =  {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         
     ),
+    'DEFAULT_PERMISSION_CLASS' : ["rest_framework.permissions.IsAuthenticated",]
     
 }
 
@@ -180,8 +189,10 @@ DJOSER = {
     "SEND_ACTIVATION_EMAIL": True,
     "SOCIAL_AUTH_TOKEN_STRATEGY": "djoser.social.token.jwt.TokenStrategy",
     "SOCIAL_AUTH_ALLOWED_REDIRECT_URIS": ["http://127.0.0.1:8000","http://localhost:8000", "http://127.0.0.1:5173", "http://localhost:5173"],
+    "HIDE_USERS" : False,
     'PERMISSIONS': {
-        'user_create': ['rest_framework.permissions.AllowAny'],
+        'user': ['rest_framework.permissions.AllowAny'],
+        'user_list': ['rest_framework.permissions.AllowAny'],
     },
     'SERIALIZERS': {
        'user_create': 'core.serializers.UserCreateSerializer',
@@ -240,8 +251,10 @@ SIMPLE_JWT = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'localhost'
-EMAIL_USER = ''
-EMAIL_PASSWORD = ''
-EMAIL_PORT = 2525
-DEFAULT_FROM_EMAIL = 'info@dawityimer.com'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'john15reset622@gmail.com'
+EMAIL_HOST_PASSWORD = 'qymg wxxd lkek fmnn'
+EMAIL_USE_TLS = True
+EMAIL_TIMEOUT = 10  # or a higher value if needed
+EMAIL_DEBUG = True

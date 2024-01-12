@@ -8,12 +8,12 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     
     def __str__(self):
-        return self.username
+        return self.first_name
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
     
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', "last_name"]
+    REQUIRED_FIELDS = ['first_name', "last_name", "username"]
 
        
