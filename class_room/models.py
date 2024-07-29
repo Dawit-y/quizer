@@ -66,7 +66,6 @@ class TrueFalseQuestion(models.Model):
     number = models.PositiveSmallIntegerField()
     content = models.TextField()
     correct_answer = models.CharField(max_length=5, choices=ANSWER_CHOICES)
-    answer = models.CharField(max_length=5, choices=ANSWER_CHOICES)
 
     def __str__(self) -> str:
         return self.content
@@ -75,7 +74,7 @@ class FillInQuestion(models.Model):
     number = models.PositiveSmallIntegerField()
     content = models.TextField()
     correct_answer = models.CharField(max_length=20)
-    answer = models.CharField(max_length=20)
+
 
     def __str__(self) -> str:
         return self.content
